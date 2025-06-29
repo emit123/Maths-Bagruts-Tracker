@@ -1,7 +1,17 @@
 import React, { useState, useEffect } from "react";
 
-// Initial data for the math bagrut questions, merging instructions and skipped values from the first code
-// and adding examLink and solutionsLink from the second code.
+// Define a data version. Increment this number whenever the structure
+// or default values of initialExamsData change significantly,
+// or if the underlying data values themselves are corrected/updated.
+// When you make changes to initialExamsData (e.g., adding new exams,
+// changing instructions, or skipped statuses), increment this DATA_VERSION.
+// This will trigger a data migration rather than a full reset,
+// preserving user progress (checked/unchecked boxes).
+const DATA_VERSION = 2; // Set to version 2 as requested
+
+// Initial data for the math bagrut questions.
+// This data structure and its values (instructions, skipped status, links)
+// are kept exactly as specified in your latest input.
 const initialExamsData = [
   {
     date: "קיץ 2020",
@@ -33,7 +43,7 @@ const initialExamsData = [
     examLink:
       "https://files.geva.co.il/geva_website/uploads/2022/04/571_summer_june20.pdf",
     solutionsLink:
-      "https://files.geva.co.il/geva_website/uploads/2020/06/571_summer_june20_answers.pdf",
+      "https://files.geva.co.il/geva_website/uploads/2020/06/%D7%A4%D7%AA%D7%A8%D7%95%D7%9F-35571-%D7%9E%D7%95%D7%A2%D7%93-%D7%91-%D7%A7%D7%99%D7%A5-20.pdf",
   },
   {
     date: "מועד ב' 2020",
@@ -617,33 +627,80 @@ const initialExamsData = [
 // to act as a pure initializer for useState.
 const loadExamsData = () => {
   try {
-    const savedExams = localStorage.getItem("bagrutMathTracker");
-    if (savedExams) {
-      const parsedExams = JSON.parse(savedExams);
-      // Ensure 'done', 'examLink', 'solutionsLink' properties exist
-      return parsedExams.map((exam) => {
-        return {
-          ...exam,
-          examLink: exam.examLink || "",
-          solutionsLink: exam.solutionsLink || "",
-          chapters: exam.chapters.map((chapter) => {
-            return {
-              ...chapter,
-              questions: chapter.questions.map((question) => {
-                return {
-                  ...question,
-                  done: question.done !== undefined ? question.done : false,
-                };
-              }),
-            };
-          }),
-        };
-      });
+    const savedData = localStorage.getItem("bagrutMathTracker");
+    if (savedData) {
+      const parsedData = JSON.parse(savedData);
+      // Check if the saved data has the current DATA_VERSION and contains exams
+      if (parsedData.version === DATA_VERSION && parsedData.exams) {
+        // If version matches, use the saved exams data and ensure all necessary properties are present
+        return parsedData.exams.map((exam) => {
+          return {
+            ...exam,
+            examLink: exam.examLink || "",
+            solutionsLink: exam.solutionsLink || "",
+            chapters: exam.chapters.map((chapter) => {
+              return {
+                ...chapter,
+                questions: chapter.questions.map((question) => {
+                  return {
+                    ...question,
+                    done: question.done !== undefined ? question.done : false,
+                  };
+                }),
+              };
+            }),
+          };
+        });
+      } else {
+        // If version doesn't match or structure is missing, perform data migration
+        console.warn(
+          "LocalStorage data version mismatch or corrupt. Attempting data migration."
+        );
+
+        // Create a new exams structure based on the current initialExamsData,
+        // migrating 'done' status from old data where possible.
+        const migratedExams = initialExamsData.map((newExam) => {
+          const oldExam = parsedData.exams?.find(
+            (oldE) => oldE.date === newExam.date
+          ); // Find matching old exam by date
+
+          return {
+            ...newExam, // Start with the latest definitions (instructions, skipped, links)
+            chapters: newExam.chapters.map((newChapter) => {
+              const oldChapter = oldExam?.chapters.find(
+                (oldC) => oldC.name === newChapter.name
+              ); // Find matching old chapter by name
+
+              return {
+                ...newChapter,
+                questions: newChapter.questions.map((newQuestion) => {
+                  const oldQuestion = oldChapter?.questions.find(
+                    (oldQ) => oldQ.number === newQuestion.number
+                  ); // Find matching old question by number
+                  return {
+                    ...newQuestion,
+                    // Preserve 'done' status if a matching old question exists, otherwise default to false
+                    done: oldQuestion
+                      ? oldQuestion.done !== undefined
+                        ? oldQuestion.done
+                        : false
+                      : false,
+                  };
+                }),
+              };
+            }),
+          };
+        });
+        return migratedExams;
+      }
     }
   } catch (error) {
-    console.error("Failed to parse exams from localStorage", error);
+    console.error(
+      "Failed to parse exams from localStorage or during migration",
+      error
+    );
   }
-  // If no saved data or parsing failed, initialize with default data
+  // If no saved data, or migration failed, initialize with default data and current version.
   return initialExamsData.map((exam) => {
     return {
       ...exam,
@@ -655,7 +712,7 @@ const loadExamsData = () => {
           questions: chapter.questions.map((question) => {
             return {
               ...question,
-              done: false,
+              done: false, // Initialize all questions as not done
             };
           }),
         };
@@ -668,9 +725,12 @@ function App() {
   // State to hold the exams data, initialized by calling loadExamsData.
   const [exams, setExams] = useState(loadExamsData);
 
-  // Effect to save exams data to localStorage whenever it changes.
+  // Effect to save exams data and the current DATA_VERSION to localStorage whenever exams state changes.
   useEffect(() => {
-    localStorage.setItem("bagrutMathTracker", JSON.stringify(exams));
+    localStorage.setItem(
+      "bagrutMathTracker",
+      JSON.stringify({ version: DATA_VERSION, exams: exams })
+    );
   }, [exams]);
 
   // Function to handle checkbox changes.
