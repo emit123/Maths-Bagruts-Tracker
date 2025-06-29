@@ -1,9 +1,7 @@
 import React, { useState, useEffect } from "react";
 
-// Initial data for the math bagrut questions, meticulously updated based on user's latest instructions.
-// Each object represents an exam date.
-// 'skipped: true' means the question/section is grayed out and should be skipped.
-// 'instruction' provides details on parts of the question to omit.
+// Initial data for the math bagrut questions, merging instructions and skipped values from the first code
+// and adding examLink and solutionsLink from the second code.
 const initialExamsData = [
   {
     date: "קיץ 2020",
@@ -11,8 +9,8 @@ const initialExamsData = [
       {
         name: "פרק 1",
         questions: [
-          { number: "שאלה 1", instruction: "ללא א'", skipped: false }, // Updated
-          { number: "שאלה 2", instruction: "", skipped: false }, // Cleared
+          { number: "שאלה 1", instruction: "ללא א'", skipped: false },
+          { number: "שאלה 2", instruction: "", skipped: false },
         ],
       },
       {
@@ -32,9 +30,13 @@ const initialExamsData = [
         ],
       },
     ],
+    examLink:
+      "https://files.geva.co.il/geva_website/uploads/2022/04/571_summer_june20.pdf",
+    solutionsLink:
+      "https://files.geva.co.il/geva_website/uploads/2020/06/571_summer_june20_answers.pdf",
   },
   {
-    date: "מועד ב' 2020", // "אין הערות"
+    date: "מועד ב' 2020",
     chapters: [
       {
         name: "פרק 1",
@@ -60,6 +62,10 @@ const initialExamsData = [
         ],
       },
     ],
+    examLink:
+      "https://files.geva.co.il/geva_website/uploads/2020/06/%D7%A4%D7%AA%D7%A8%D7%95%D7%9F-35571-%D7%9E%D7%95%D7%A2%D7%93-%D7%91-%D7%A7%D7%99%D7%A5-20.pdf",
+    solutionsLink:
+      "https://files.geva.co.il/geva_website/uploads/2020/06/%D7%A4%D7%AA%D7%A8%D7%95%D7%9F-%D7%9E%D7%9C%D7%90-571-%D7%A2%D7%A4%D7%A8-%D7%99%D7%9C%D7%99%D7%9F-1.pdf",
   },
   {
     date: "חורף 2021",
@@ -67,7 +73,7 @@ const initialExamsData = [
       {
         name: "פרק 1",
         questions: [
-          { number: "שאלה 1", instruction: "ללא ב'", skipped: false }, // Updated
+          { number: "שאלה 1", instruction: "ללא ב'", skipped: false },
           { number: "שאלה 2", instruction: "", skipped: false },
         ],
       },
@@ -76,18 +82,22 @@ const initialExamsData = [
         questions: [
           { number: "שאלה 3", instruction: "", skipped: false },
           { number: "שאלה 4", instruction: "", skipped: false },
-          { number: "שאלה 5", instruction: "", skipped: false }, // No longer skipped
-          { number: "שאלה 6", instruction: "", skipped: false }, // No longer skipped
+          { number: "שאלה 5", instruction: "", skipped: false },
+          { number: "שאלה 6", instruction: "", skipped: false },
         ],
       },
       {
         name: "פרק 3",
         questions: [
           { number: "שאלה 7", instruction: "", skipped: false },
-          { number: "שאלה 8", instruction: "", skipped: true }, // Updated
+          { number: "שאלה 8", instruction: "", skipped: true },
         ],
       },
     ],
+    examLink:
+      "https://files.geva.co.il/geva_website/uploads/2021/02/571_winter_february21.pdf",
+    solutionsLink:
+      "https://files.geva.co.il/geva_website/uploads/2022/04/571_winter_february21_answers.pdf",
   },
   {
     date: "קיץ 2021",
@@ -96,15 +106,15 @@ const initialExamsData = [
         name: "פרק 1",
         questions: [
           { number: "שאלה 1", instruction: "", skipped: false },
-          { number: "שאלה 2", instruction: "", skipped: true }, // Updated
+          { number: "שאלה 2", instruction: "", skipped: true },
         ],
       },
       {
         name: "פרק 2",
         questions: [
           { number: "שאלה 3", instruction: "", skipped: false },
-          { number: "שאלה 4", instruction: "", skipped: false }, // No longer skipped
-          { number: "שאלה 5", instruction: "", skipped: false }, // No longer skipped
+          { number: "שאלה 4", instruction: "", skipped: false },
+          { number: "שאלה 5", instruction: "", skipped: false },
           { number: "שאלה 6", instruction: "", skipped: false },
         ],
       },
@@ -112,10 +122,14 @@ const initialExamsData = [
         name: "פרק 3",
         questions: [
           { number: "שאלה 7", instruction: "", skipped: false },
-          { number: "שאלה 8", instruction: "", skipped: true }, // Updated
+          { number: "שאלה 8", instruction: "", skipped: true },
         ],
       },
     ],
+    examLink:
+      "https://files.geva.co.il/geva_website/uploads/2021/05/571_summer_may21.pdf",
+    solutionsLink:
+      "https://files.geva.co.il/geva_website/uploads/2021/05/571_summer_may21_answers.pdf",
   },
   {
     date: "מועד מיוחד 2021",
@@ -124,35 +138,7 @@ const initialExamsData = [
         name: "פרק 1",
         questions: [
           { number: "שאלה 1", instruction: "", skipped: false },
-          { number: "שאלה 2", instruction: "", skipped: true }, // Updated
-        ],
-      },
-      {
-        name: "פרק 2",
-        questions: [
-          { number: "שאלה 3", instruction: "", skipped: false },
-          { number: "שאלה 4", instruction: "", skipped: false },
-          { number: "שאלה 5", instruction: "", skipped: false },
-          { number: "שאלה 6", instruction: "", skipped: false }, // Retained if not contradicted
-        ],
-      },
-      {
-        name: "פרק 3",
-        questions: [
-          { number: "שאלה 7", instruction: "", skipped: false },
-          { number: "שאלה 8", instruction: "", skipped: false },
-        ],
-      },
-    ],
-  },
-  {
-    date: "מועד ב' 2021", // NEWLY ADDED EXAM
-    chapters: [
-      {
-        name: "פרק 1",
-        questions: [
-          { number: "שאלה 1", instruction: "", skipped: false },
-          { number: "שאלה 2", instruction: "ללא ה1", skipped: false }, // Updated
+          { number: "שאלה 2", instruction: "", skipped: true },
         ],
       },
       {
@@ -172,6 +158,42 @@ const initialExamsData = [
         ],
       },
     ],
+    examLink:
+      "https://files.geva.co.il/geva_website/uploads/2021/05/571_special_june21.pdf",
+    solutionsLink:
+      "https://files.geva.co.il/geva_website/uploads/2021/05/571_special_june21_answers.pdf",
+  },
+  {
+    date: "מועד ב' 2021",
+    chapters: [
+      {
+        name: "פרק 1",
+        questions: [
+          { number: "שאלה 1", instruction: "", skipped: false },
+          { number: "שאלה 2", instruction: "ללא ה1", skipped: false },
+        ],
+      },
+      {
+        name: "פרק 2",
+        questions: [
+          { number: "שאלה 3", instruction: "", skipped: false },
+          { number: "שאלה 4", instruction: "", skipped: false },
+          { number: "שאלה 5", instruction: "", skipped: false },
+          { number: "שאלה 6", instruction: "", skipped: false },
+        ],
+      },
+      {
+        name: "פרק 3",
+        questions: [
+          { number: "שאלה 7", instruction: "", skipped: false },
+          { number: "שאלה 8", instruction: "", skipped: false },
+        ],
+      },
+    ],
+    examLink:
+      "https://files.geva.co.il/geva_website/uploads/2021/05/571_summerB_july21.pdf",
+    solutionsLink:
+      "https://files.geva.co.il/geva_website/uploads/2021/05/571_summerB_july21_answers.pdf",
   },
   {
     date: "חורף 2022",
@@ -182,7 +204,7 @@ const initialExamsData = [
           { number: "שאלה 1", instruction: "", skipped: false },
           { number: "שאלה 2", instruction: "", skipped: true },
         ],
-      }, // S2 skipped
+      },
       {
         name: "פרק 2",
         questions: [
@@ -191,23 +213,27 @@ const initialExamsData = [
           { number: "שאלה 5", instruction: "", skipped: false },
           { number: "שאלה 6", instruction: "", skipped: false },
         ],
-      }, // Cleared
+      },
       {
         name: "פרק 3",
         questions: [
           { number: "שאלה 7", instruction: "", skipped: false },
           { number: "שאלה 8", instruction: "", skipped: true },
         ],
-      }, // S8 skipped
+      },
     ],
+    examLink:
+      "https://files.geva.co.il/geva_website/uploads/2022/01/571_winter_january22.pdf",
+    solutionsLink:
+      "https://files.geva.co.il/geva_website/uploads/2022/01/571_winter_january22_answers.pdf",
   },
   {
-    date: "נבצרים 2022", // Retaining original name "נבחנים" for consistency.
+    date: "נבצרים 2022",
     chapters: [
       {
         name: "פרק 1",
         questions: [
-          { number: "שאלה 1", instruction: "ללא א', ב'", skipped: false }, // Updated
+          { number: "שאלה 1", instruction: "ללא א', ב'", skipped: false },
           { number: "שאלה 2", instruction: "", skipped: false },
         ],
       },
@@ -228,6 +254,10 @@ const initialExamsData = [
         ],
       },
     ],
+    examLink:
+      "https://files.geva.co.il/geva_website/uploads/2022/01/571_winterNIVZARIM_february22.pdf",
+    solutionsLink:
+      "https://files.geva.co.il/geva_website/uploads/2022/01/%D7%A4%D7%AA%D7%A8%D7%95%D7%9F-%D7%9E%D7%9C%D7%90-35571.pdf",
   },
   {
     date: "קיץ 2022",
@@ -235,15 +265,15 @@ const initialExamsData = [
       {
         name: "פרק 1",
         questions: [
-          { number: "שאלה 1", instruction: "ללא א'", skipped: false }, // Updated
+          { number: "שאלה 1", instruction: "ללא א'", skipped: false },
           { number: "שאלה 2", instruction: "", skipped: false },
         ],
       },
       {
         name: "פרק 2",
         questions: [
-          { number: "שאלה 3", instruction: "", skipped: false }, // No longer skipped
-          { number: "שאלה 4", instruction: "", skipped: false }, // No longer skipped
+          { number: "שאלה 3", instruction: "", skipped: false },
+          { number: "שאלה 4", instruction: "", skipped: false },
           { number: "שאלה 5", instruction: "", skipped: false },
           { number: "שאלה 6", instruction: "", skipped: false },
         ],
@@ -256,9 +286,13 @@ const initialExamsData = [
         ],
       },
     ],
+    examLink:
+      "https://files.geva.co.il/geva_website/uploads/2022/05/35571-%D7%A9%D7%90%D7%9C%D7%95%D7%9F-%D7%9E%D7%95%D7%A2%D7%93-%D7%90.pdf",
+    solutionsLink:
+      "https://files.geva.co.il/geva_website/uploads/2022/05/35571-%D7%A4%D7%AA%D7%A8%D7%95%D7%9F-%D7%9E%D7%95%D7%A2%D7%93-%D7%90.pdf",
   },
   {
-    date: "מועד ב' 2022", // "אין הערות"
+    date: "מועד ב' 2022",
     chapters: [
       {
         name: "פרק 1",
@@ -284,9 +318,13 @@ const initialExamsData = [
         ],
       },
     ],
+    examLink:
+      "https://files.geva.co.il/geva_website/uploads/2022/05/35571-%D7%A9%D7%90%D7%9C%D7%95%D7%9F-%D7%9E%D7%95%D7%A2%D7%93-%D7%91.pdf",
+    solutionsLink:
+      "https://files.geva.co.il/geva_website/uploads/2022/05/35571-%D7%A4%D7%AA%D7%A8%D7%95%D7%9F-%D7%9E%D7%95%D7%A2%D7%93-%D7%91.pdf",
   },
   {
-    date: "חורף 2023", // "אין הערות"
+    date: "חורף 2023",
     chapters: [
       {
         name: "פרק 1",
@@ -312,6 +350,10 @@ const initialExamsData = [
         ],
       },
     ],
+    examLink:
+      "https://files.geva.co.il/geva_website/uploads/2023/01/%D7%A9%D7%90%D7%9C%D7%95%D7%9F-35571.pdf",
+    solutionsLink:
+      "https://files.geva.co.il/geva_website/uploads/2023/01/%D7%A4%D7%AA%D7%A8%D7%95%D7%9F-35571-%D7%AA%D7%95%D7%9B%D7%A0%D7%99%D7%AA-%D7%97%D7%93%D7%A9%D7%94.pdf",
   },
   {
     date: "קיץ 2023",
@@ -322,7 +364,7 @@ const initialExamsData = [
           { number: "שאלה 1", instruction: "ללא א'", skipped: false },
           { number: "שאלה 2", instruction: "ללא ג', ד'", skipped: false },
         ],
-      }, // Updated
+      },
       {
         name: "פרק 2",
         questions: [
@@ -331,15 +373,19 @@ const initialExamsData = [
           { number: "שאלה 5", instruction: "", skipped: false },
           { number: "שאלה 6", instruction: "", skipped: false },
         ],
-      }, // Cleared
+      },
       {
         name: "פרק 3",
         questions: [
           { number: "שאלה 7", instruction: "", skipped: false },
           { number: "שאלה 8", instruction: "", skipped: true },
         ],
-      }, // S8 skipped
+      },
     ],
+    examLink:
+      "https://files.geva.co.il/geva_website/uploads/2023/05/%D7%A9%D7%90%D7%9C%D7%95%D7%9F-35571.pdf",
+    solutionsLink:
+      "https://files.geva.co.il/geva_website/uploads/2023/05/%D7%A4%D7%AA%D7%A8%D7%95%D7%9F-35571-2.pdf",
   },
   {
     date: "מועד מיוחד 2023",
@@ -350,7 +396,7 @@ const initialExamsData = [
           { number: "שאלה 1", instruction: "", skipped: false },
           { number: "שאלה 2", instruction: "", skipped: true },
         ],
-      }, // S2 skipped
+      },
       {
         name: "פרק 2",
         questions: [
@@ -359,15 +405,19 @@ const initialExamsData = [
           { number: "שאלה 5", instruction: "", skipped: false },
           { number: "שאלה 6", instruction: "", skipped: false },
         ],
-      }, // Cleared
+      },
       {
         name: "פרק 3",
         questions: [
           { number: "שאלה 7", instruction: "", skipped: false },
           { number: "שאלה 8", instruction: "", skipped: false },
         ],
-      }, // Cleared
+      },
     ],
+    examLink:
+      "https://files.geva.co.il/geva_website/uploads/2023/05/%D7%A4%D7%92-571-003-%D7%99%D7%95%D7%A0%D7%99-23-%D7%9E%D7%95%D7%A2%D7%93-%D7%A7%D7%99%D7%A5-%D7%9E%D7%99%D7%95%D7%97%D7%93.pdf",
+    solutionsLink:
+      "https://files.geva.co.il/geva_website/uploads/2023/05/%D7%A4%D7%AA%D7%A8%D7%95%D7%9F-35571-1.pdf",
   },
   {
     date: "מועד ב' 2023",
@@ -378,7 +428,7 @@ const initialExamsData = [
           { number: "שאלה 1", instruction: "", skipped: false },
           { number: "שאלה 2", instruction: "", skipped: true },
         ],
-      }, // S2 skipped
+      },
       {
         name: "פרק 2",
         questions: [
@@ -387,15 +437,19 @@ const initialExamsData = [
           { number: "שאלה 5", instruction: "", skipped: false },
           { number: "שאלה 6", instruction: "", skipped: false },
         ],
-      }, // Cleared
+      },
       {
         name: "פרק 3",
         questions: [
           { number: "שאלה 7", instruction: "", skipped: false },
           { number: "שאלה 8", instruction: "", skipped: true },
         ],
-      }, // S8 skipped
+      },
     ],
+    examLink:
+      "https://files.geva.co.il/geva_website/uploads/2023/05/%D7%A9%D7%90%D7%9C%D7%95%D7%9F-35571-%D7%9E%D7%95%D7%A2%D7%93-%D7%91.pdf",
+    solutionsLink:
+      "https://files.geva.co.il/geva_website/uploads/2023/05/%D7%A4%D7%AA%D7%A8%D7%95%D7%9F-35571-%D7%9E%D7%95%D7%A2%D7%93-%D7%91.pdf",
   },
   {
     date: "חורף 2024",
@@ -404,15 +458,15 @@ const initialExamsData = [
         name: "פרק 1",
         questions: [
           { number: "שאלה 1", instruction: "", skipped: false },
-          { number: "שאלה 2", instruction: "", skipped: true }, // Updated
+          { number: "שאלה 2", instruction: "", skipped: true },
         ],
       },
       {
         name: "פרק 2",
         questions: [
-          { number: "שאלה 3", instruction: "", skipped: false }, // No longer skipped
-          { number: "שאלה 4", instruction: "", skipped: false }, // No longer skipped
-          { number: "שאלה 5", instruction: "", skipped: false }, // No longer skipped
+          { number: "שאלה 3", instruction: "", skipped: false },
+          { number: "שאלה 4", instruction: "", skipped: false },
+          { number: "שאלה 5", instruction: "", skipped: false },
           { number: "שאלה 6", instruction: "", skipped: false },
         ],
       },
@@ -424,9 +478,13 @@ const initialExamsData = [
         ],
       },
     ],
+    examLink:
+      "https://files.geva.co.il/geva_website/uploads/2024/03/%D7%A9%D7%90%D7%9C%D7%95%D7%9F-35571-%D7%AA%D7%95%D7%9B%D7%A0%D7%99%D7%AA-%D7%97%D7%93%D7%A9%D7%94.pdf",
+    solutionsLink:
+      "https://files.geva.co.il/geva_website/uploads/2024/03/%D7%A4%D7%AA%D7%A8%D7%95%D7%9F-571-1.pdf",
   },
   {
-    date: "קיץ 2024", // "אין הערות"
+    date: "קיץ 2024",
     chapters: [
       {
         name: "פרק 1",
@@ -452,9 +510,13 @@ const initialExamsData = [
         ],
       },
     ],
+    examLink:
+      "https://files.geva.co.il/geva_website/uploads/2024/05/%D7%A4%D7%93-571-002-%D7%9E%D7%90%D7%99-24-%D7%9E%D7%95%D7%A2%D7%93-%D7%A7%D7%99%D7%A5-%D7%90.pdf",
+    solutionsLink:
+      "https://files.geva.co.il/geva_website/uploads/2024/05/%D7%A4%D7%AA%D7%A8%D7%95%D7%9F-571-2.pdf",
   },
   {
-    date: "מועד ב' 2024", // "אין הערות"
+    date: "מועד ב' 2024",
     chapters: [
       {
         name: "פרק 1",
@@ -480,6 +542,74 @@ const initialExamsData = [
         ],
       },
     ],
+    examLink:
+      "https://files.geva.co.il/geva_website/uploads/2024/05/%D7%A9%D7%90%D7%9C%D7%95%D7%9F-571-%D7%99%D7%95%D7%9C%D7%99-24-%D7%9E%D7%95%D7%A2%D7%93-%D7%A7%D7%99%D7%A5-%D7%91.pdf",
+    solutionsLink:
+      "https://files.geva.co.il/geva_website/uploads/2024/12/%D7%A4%D7%93-571-003-%D7%99%D7%95%D7%9C%D7%99-24-%D7%9E%D7%95%D7%A2%D7%93-%D7%A7%D7%99%D7%A5-%D7%91-%D7%A4%D7%AA%D7%A8%D7%95%D7%A0%D7%95%D7%AA-%D7%A2%D7%A4%D7%A8.pdf",
+  },
+  {
+    date: "2025 מועד חורף",
+    chapters: [
+      {
+        name: "פרק 1",
+        questions: [
+          { number: "שאלה 1", instruction: "", skipped: false },
+          { number: "שאלה 2", instruction: "", skipped: false },
+        ],
+      },
+      {
+        name: "פרק 2",
+        questions: [
+          { number: "שאלה 3", instruction: "", skipped: false },
+          { number: "שאלה 4", instruction: "", skipped: false },
+          { number: "שאלה 5", instruction: "", skipped: false },
+          { number: "שאלה 6", instruction: "", skipped: false },
+        ],
+      },
+      {
+        name: "פרק 3",
+        questions: [
+          { number: "שאלה 7", instruction: "", skipped: false },
+          { number: "שאלה 8", instruction: "", skipped: false },
+        ],
+      },
+    ],
+    examLink:
+      "https://files.geva.co.il/geva_website/uploads/2025/01/%D7%A4%D7%94-571-001-%D7%99%D7%A0%D7%95%D7%90%D7%A8-25-%D7%9E%D7%95%D7%A2%D7%93-%D7%97%D7%95%D7%A8%D7%A3-1.pdf",
+    solutionsLink:
+      "https://files.geva.co.il/geva_website/uploads/2025/01/%D7%A4%D7%94-571-001-%D7%99%D7%A0%D7%95%D7%90%D7%A8-25-%D7%9E%D7%95%D7%A2%D7%93-%D7%97%D7%95%D7%A8%D7%A3-%D7%A4%D7%AA%D7%A8%D7%95%D7%A0%D7%95%D7%AA-%D7%A2%D7%A4%D7%A8.pdf",
+  },
+  {
+    date: "2025 מועד קיץ",
+    chapters: [
+      {
+        name: "פרק 1",
+        questions: [
+          { number: "שאלה 1", instruction: "", skipped: false },
+          { number: "שאלה 2", instruction: "", skipped: false },
+        ],
+      },
+      {
+        name: "פרק 2",
+        questions: [
+          { number: "שאלה 3", instruction: "", skipped: false },
+          { number: "שאלה 4", instruction: "", skipped: false },
+          { number: "שאלה 5", instruction: "", skipped: false },
+          { number: "שאלה 6", instruction: "", skipped: false },
+        ],
+      },
+      {
+        name: "פרק 3",
+        questions: [
+          { number: "שאלה 7", instruction: "", skipped: false },
+          { number: "שאלה 8", instruction: "", skipped: false },
+        ],
+      },
+    ],
+    examLink:
+      "https://files.geva.co.il/geva_website/uploads/2025/05/%D7%A9%D7%90%D7%9C%D7%95%D7%9F-35571-%D7%A7%D7%99%D7%A5-25-%D7%9E%D7%95%D7%A2%D7%93-%D7%90.pdf",
+    solutionsLink:
+      "https://files.geva.co.il/geva_website/uploads/2025/05/%D7%A4%D7%AA%D7%A8%D7%95%D7%9F-%D7%9E%D7%9C%D7%90-35571-%D7%9E%D7%95%D7%A2%D7%93-%D7%90-%D7%A7%D7%99%D7%A5-25-1.pdf",
   },
 ];
 
@@ -490,10 +620,12 @@ const loadExamsData = () => {
     const savedExams = localStorage.getItem("bagrutMathTracker");
     if (savedExams) {
       const parsedExams = JSON.parse(savedExams);
-      // Ensure 'done' property exists for all questions, default to false if not found
+      // Ensure 'done', 'examLink', 'solutionsLink' properties exist
       return parsedExams.map((exam) => {
         return {
           ...exam,
+          examLink: exam.examLink || "",
+          solutionsLink: exam.solutionsLink || "",
           chapters: exam.chapters.map((chapter) => {
             return {
               ...chapter,
@@ -511,18 +643,19 @@ const loadExamsData = () => {
   } catch (error) {
     console.error("Failed to parse exams from localStorage", error);
   }
-  // If no saved data or parsing failed, initialize with default data,
-  // adding a 'done' property to each question.
+  // If no saved data or parsing failed, initialize with default data
   return initialExamsData.map((exam) => {
     return {
       ...exam,
+      examLink: exam.examLink || "",
+      solutionsLink: exam.solutionsLink || "",
       chapters: exam.chapters.map((chapter) => {
         return {
           ...chapter,
           questions: chapter.questions.map((question) => {
             return {
               ...question,
-              done: false, // Initialize all questions as not done
+              done: false,
             };
           }),
         };
@@ -543,7 +676,6 @@ function App() {
   // Function to handle checkbox changes.
   const handleCheckboxChange = (examIndex, chapterIndex, questionIndex) => {
     setExams((prevExams) => {
-      // Perform deep copy for nested objects to ensure React detects changes and re-renders
       const updatedExams = prevExams.map((exam, eIdx) => {
         if (eIdx === examIndex) {
           return {
@@ -556,7 +688,7 @@ function App() {
                     if (qIdx === questionIndex) {
                       return {
                         ...question,
-                        done: !question.done, // Toggle the 'done' status
+                        done: !question.done,
                       };
                     }
                     return question;
@@ -575,7 +707,6 @@ function App() {
 
   // Function to reset all progress.
   const handleReset = () => {
-    // Custom modal dialog instead of window.confirm
     const confirmReset = document.createElement("div");
     confirmReset.className =
       "fixed inset-0 bg-gray-600 bg-opacity-50 flex items-center justify-center z-50";
@@ -626,21 +757,20 @@ function App() {
         body {
           font-family: 'Inter', sans-serif;
         }
-        /* Custom scrollbar for table container */
         .table-container::-webkit-scrollbar {
           height: 12px;
         }
         .table-container::-webkit-scrollbar-track {
-          background: #f0f4f8; /* light blue-gray */
+          background: #f0f4f8;
           border-radius: 10px;
         }
         .table-container::-webkit-scrollbar-thumb {
-          background: #94a3b8; /* slate-400 */
+          background: #94a3b8;
           border-radius: 10px;
           border: 3px solid #f0f4f8;
         }
         .table-container::-webkit-scrollbar-thumb:hover {
-          background: #64748b; /* slate-600 */
+          background: #64748b;
         }
         `}
       </style>
@@ -663,11 +793,10 @@ function App() {
               >
                 מועד
               </th>
-              {/* Render Chapter headers */}
               {exams.length > 0 &&
                 exams[0].chapters.map((chapter, chapIndex) => (
                   <th
-                    key={`chapter-header-${chapIndex}`} // Use indices for stable keys for static headers
+                    key={`chapter-header-${chapIndex}`}
                     colSpan={chapter.questions.length}
                     className="py-3 px-4 border-b-2 border-blue-700 font-bold text-center"
                   >
@@ -676,12 +805,11 @@ function App() {
                 ))}
             </tr>
             <tr>
-              {/* Render Question headers for each chapter */}
               {exams.length > 0 &&
                 exams[0].chapters.map((chapter, chapIndex) =>
                   chapter.questions.map((question, qIndex) => (
                     <th
-                      key={`question-header-${chapIndex}-${qIndex}`} // Use indices for stable keys for static headers
+                      key={`question-header-${chapIndex}-${qIndex}`}
                       className="py-2 px-3 border-b border-blue-700 text-center font-semibold text-xs sm:text-sm whitespace-nowrap"
                     >
                       {question.number.replace("שאלה ", "ש")}
@@ -697,7 +825,66 @@ function App() {
                 className="hover:bg-blue-50 transition-colors duration-200 ease-in-out border-b border-gray-200"
               >
                 <td className="py-3 px-4 font-semibold text-center whitespace-nowrap bg-blue-50 border-r border-gray-200">
-                  {exam.date}
+                  <div className="flex flex-col items-center justify-center h-full">
+                    <span>{exam.date}</span>
+                    <div className="flex items-center space-x-2 text-xs mt-1">
+                      {exam.examLink && (
+                        <a
+                          href={exam.examLink}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="text-blue-700 hover:text-blue-900 hover:underline flex items-center"
+                          title="קישור למבחן"
+                        >
+                          מבחן
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            width="16"
+                            height="16"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            strokeWidth="2"
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            className="lucide lucide-file-text ml-1"
+                          >
+                            <path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z" />
+                            <path d="M14 2v4a2 2 0 0 0 2 2h4" />
+                            <path d="M10 9H8" />
+                            <path d="M16 13H8" />
+                            <path d="M16 17H8" />
+                          </svg>
+                        </a>
+                      )}
+                      {exam.solutionsLink && (
+                        <a
+                          href={exam.solutionsLink}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="text-green-700 hover:text-green-900 hover:underline flex items-center"
+                          title="קישור לפתרונות"
+                        >
+                          פתרונות
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            width="16"
+                            height="16"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            strokeWidth="2"
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            className="lucide lucide-check-circle ml-1"
+                          >
+                            <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" />
+                            <path d="m9 11 3 3L22 4" />
+                          </svg>
+                        </a>
+                      )}
+                    </div>
+                  </div>
                 </td>
                 {exam.chapters.map((chapter, chapterIndex) =>
                   chapter.questions.map((question, questionIndex) => (
@@ -714,7 +901,7 @@ function App() {
                         paddingBottom: question.instruction
                           ? "1.5rem"
                           : "0.75rem",
-                      }} // Dynamic padding for instruction space
+                      }}
                     >
                       {question.instruction && (
                         <span
