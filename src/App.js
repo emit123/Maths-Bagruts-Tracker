@@ -7,7 +7,7 @@ import React, { useState, useEffect } from "react";
 // changing instructions, or skipped statuses), increment this DATA_VERSION.
 // This will trigger a data migration rather than a full reset,
 // preserving user progress (checked/unchecked boxes).
-const DATA_VERSION = 2; // Set to version 2 as requested
+const DATA_VERSION = 6; // Incremented to version 5 for splitting Question 1 into sections
 
 // Initial data for the math bagrut questions.
 // This data structure and its values (instructions, skipped status, links)
@@ -19,7 +19,10 @@ const initialExamsData = [
       {
         name: "פרק 1",
         questions: [
-          { number: "שאלה 1", instruction: "ללא א'", skipped: false },
+          { number: "שאלה 1 א", instruction: "", skipped: true }, // Split from original Question 1
+          { number: "שאלה 1 ב", instruction: "", skipped: false },
+          { number: "שאלה 1 ג", instruction: "", skipped: false },
+          { number: "שאלה 1 ד", instruction: "", skipped: false },
           { number: "שאלה 2", instruction: "", skipped: false },
         ],
       },
@@ -51,7 +54,10 @@ const initialExamsData = [
       {
         name: "פרק 1",
         questions: [
-          { number: "שאלה 1", instruction: "", skipped: false },
+          { number: "שאלה 1 א", instruction: "", skipped: false },
+          { number: "שאלה 1 ב", instruction: "", skipped: false },
+          { number: "שאלה 1 ג", instruction: "", skipped: false },
+          { number: "שאלה 1 ד", instruction: "", skipped: false },
           { number: "שאלה 2", instruction: "", skipped: false },
         ],
       },
@@ -83,7 +89,10 @@ const initialExamsData = [
       {
         name: "פרק 1",
         questions: [
-          { number: "שאלה 1", instruction: "ללא ב'", skipped: false },
+          { number: "שאלה 1 א", instruction: "", skipped: false },
+          { number: "שאלה 1 ב", instruction: "", skipped: true },
+          { number: "שאלה 1 ג", instruction: "", skipped: false },
+          { number: "שאלה 1 ד", instruction: "", skipped: false },
           { number: "שאלה 2", instruction: "", skipped: false },
         ],
       },
@@ -115,7 +124,10 @@ const initialExamsData = [
       {
         name: "פרק 1",
         questions: [
-          { number: "שאלה 1", instruction: "", skipped: false },
+          { number: "שאלה 1 א", instruction: "", skipped: false },
+          { number: "שאלה 1 ב", instruction: "", skipped: false },
+          { number: "שאלה 1 ג", instruction: "", skipped: false },
+          { number: "שאלה 1 ד", instruction: "", skipped: false },
           { number: "שאלה 2", instruction: "", skipped: true },
         ],
       },
@@ -147,7 +159,10 @@ const initialExamsData = [
       {
         name: "פרק 1",
         questions: [
-          { number: "שאלה 1", instruction: "", skipped: false },
+          { number: "שאלה 1 א", instruction: "", skipped: false },
+          { number: "שאלה 1 ב", instruction: "", skipped: false },
+          { number: "שאלה 1 ג", instruction: "", skipped: false },
+          { number: "שאלה 1 ד", instruction: "", skipped: false },
           { number: "שאלה 2", instruction: "", skipped: true },
         ],
       },
@@ -179,7 +194,10 @@ const initialExamsData = [
       {
         name: "פרק 1",
         questions: [
-          { number: "שאלה 1", instruction: "", skipped: false },
+          { number: "שאלה 1 א", instruction: "", skipped: false },
+          { number: "שאלה 1 ב", instruction: "", skipped: false },
+          { number: "שאלה 1 ג", instruction: "", skipped: false },
+          { number: "שאלה 1 ד", instruction: "", skipped: false },
           { number: "שאלה 2", instruction: "ללא ה1", skipped: false },
         ],
       },
@@ -211,7 +229,10 @@ const initialExamsData = [
       {
         name: "פרק 1",
         questions: [
-          { number: "שאלה 1", instruction: "", skipped: false },
+          { number: "שאלה 1 א", instruction: "", skipped: false },
+          { number: "שאלה 1 ב", instruction: "", skipped: false },
+          { number: "שאלה 1 ג", instruction: "", skipped: false },
+          { number: "שאלה 1 ד", instruction: "", skipped: false },
           { number: "שאלה 2", instruction: "", skipped: true },
         ],
       },
@@ -243,7 +264,10 @@ const initialExamsData = [
       {
         name: "פרק 1",
         questions: [
-          { number: "שאלה 1", instruction: "ללא א', ב'", skipped: false },
+          { number: "שאלה 1 א", instruction: "", skipped: true },
+          { number: "שאלה 1 ב", instruction: "", skipped: true },
+          { number: "שאלה 1 ג", instruction: "", skipped: false },
+          { number: "שאלה 1 ד", instruction: "", skipped: false },
           { number: "שאלה 2", instruction: "", skipped: false },
         ],
       },
@@ -275,7 +299,10 @@ const initialExamsData = [
       {
         name: "פרק 1",
         questions: [
-          { number: "שאלה 1", instruction: "ללא א'", skipped: false },
+          { number: "שאלה 1 א", instruction: "", skipped: true },
+          { number: "שאלה 1 ב", instruction: "", skipped: false },
+          { number: "שאלה 1 ג", instruction: "", skipped: false },
+          { number: "שאלה 1 ד", instruction: "", skipped: false },
           { number: "שאלה 2", instruction: "", skipped: false },
         ],
       },
@@ -307,7 +334,10 @@ const initialExamsData = [
       {
         name: "פרק 1",
         questions: [
-          { number: "שאלה 1", instruction: "", skipped: false },
+          { number: "שאלה 1 א", instruction: "", skipped: false },
+          { number: "שאלה 1 ב", instruction: "", skipped: false },
+          { number: "שאלה 1 ג", instruction: "", skipped: false },
+          { number: "שאלה 1 ד", instruction: "", skipped: false },
           { number: "שאלה 2", instruction: "", skipped: false },
         ],
       },
@@ -339,7 +369,10 @@ const initialExamsData = [
       {
         name: "פרק 1",
         questions: [
-          { number: "שאלה 1", instruction: "", skipped: false },
+          { number: "שאלה 1 א", instruction: "", skipped: false },
+          { number: "שאלה 1 ב", instruction: "", skipped: false },
+          { number: "שאלה 1 ג", instruction: "", skipped: false },
+          { number: "שאלה 1 ד", instruction: "", skipped: false },
           { number: "שאלה 2", instruction: "", skipped: false },
         ],
       },
@@ -371,7 +404,10 @@ const initialExamsData = [
       {
         name: "פרק 1",
         questions: [
-          { number: "שאלה 1", instruction: "ללא א'", skipped: false },
+          { number: "שאלה 1 א", instruction: "", skipped: true },
+          { number: "שאלה 1 ב", instruction: "", skipped: false },
+          { number: "שאלה 1 ג", instruction: "", skipped: false },
+          { number: "שאלה 1 ד", instruction: "", skipped: false },
           { number: "שאלה 2", instruction: "ללא ג', ד'", skipped: false },
         ],
       },
@@ -403,7 +439,10 @@ const initialExamsData = [
       {
         name: "פרק 1",
         questions: [
-          { number: "שאלה 1", instruction: "", skipped: false },
+          { number: "שאלה 1 א", instruction: "", skipped: false },
+          { number: "שאלה 1 ב", instruction: "", skipped: false },
+          { number: "שאלה 1 ג", instruction: "", skipped: false },
+          { number: "שאלה 1 ד", instruction: "", skipped: false },
           { number: "שאלה 2", instruction: "", skipped: true },
         ],
       },
@@ -435,7 +474,10 @@ const initialExamsData = [
       {
         name: "פרק 1",
         questions: [
-          { number: "שאלה 1", instruction: "", skipped: false },
+          { number: "שאלה 1 א", instruction: "", skipped: false },
+          { number: "שאלה 1 ב", instruction: "", skipped: false },
+          { number: "שאלה 1 ג", instruction: "", skipped: false },
+          { number: "שאלה 1 ד", instruction: "", skipped: false },
           { number: "שאלה 2", instruction: "", skipped: true },
         ],
       },
@@ -467,7 +509,10 @@ const initialExamsData = [
       {
         name: "פרק 1",
         questions: [
-          { number: "שאלה 1", instruction: "", skipped: false },
+          { number: "שאלה 1 א", instruction: "", skipped: false },
+          { number: "שאלה 1 ב", instruction: "", skipped: false },
+          { number: "שאלה 1 ג", instruction: "", skipped: false },
+          { number: "שאלה 1 ד", instruction: "", skipped: false },
           { number: "שאלה 2", instruction: "", skipped: true },
         ],
       },
@@ -499,7 +544,10 @@ const initialExamsData = [
       {
         name: "פרק 1",
         questions: [
-          { number: "שאלה 1", instruction: "", skipped: false },
+          { number: "שאלה 1 א", instruction: "", skipped: false },
+          { number: "שאלה 1 ב", instruction: "", skipped: false },
+          { number: "שאלה 1 ג", instruction: "", skipped: false },
+          { number: "שאלה 1 ד", instruction: "", skipped: false },
           { number: "שאלה 2", instruction: "", skipped: false },
         ],
       },
@@ -531,7 +579,10 @@ const initialExamsData = [
       {
         name: "פרק 1",
         questions: [
-          { number: "שאלה 1", instruction: "", skipped: false },
+          { number: "שאלה 1 א", instruction: "", skipped: false },
+          { number: "שאלה 1 ב", instruction: "", skipped: false },
+          { number: "שאלה 1 ג", instruction: "", skipped: false },
+          { number: "שאלה 1 ד", instruction: "", skipped: false },
           { number: "שאלה 2", instruction: "", skipped: false },
         ],
       },
@@ -563,7 +614,10 @@ const initialExamsData = [
       {
         name: "פרק 1",
         questions: [
-          { number: "שאלה 1", instruction: "", skipped: false },
+          { number: "שאלה 1 א", instruction: "", skipped: false },
+          { number: "שאלה 1 ב", instruction: "", skipped: false },
+          { number: "שאלה 1 ג", instruction: "", skipped: false },
+          { number: "שאלה 1 ד", instruction: "", skipped: false },
           { number: "שאלה 2", instruction: "", skipped: false },
         ],
       },
@@ -595,7 +649,10 @@ const initialExamsData = [
       {
         name: "פרק 1",
         questions: [
-          { number: "שאלה 1", instruction: "", skipped: false },
+          { number: "שאלה 1 א", instruction: "", skipped: false },
+          { number: "שאלה 1 ב", instruction: "", skipped: false },
+          { number: "שאלה 1 ג", instruction: "", skipped: false },
+          { number: "שאלה 1 ד", instruction: "", skipped: false },
           { number: "שאלה 2", instruction: "", skipped: false },
         ],
       },
@@ -620,6 +677,39 @@ const initialExamsData = [
       "https://files.geva.co.il/geva_website/uploads/2025/05/%D7%A9%D7%90%D7%9C%D7%95%D7%9F-35571-%D7%A7%D7%99%D7%A5-25-%D7%9E%D7%95%D7%A2%D7%93-%D7%90.pdf",
     solutionsLink:
       "https://files.geva.co.il/geva_website/uploads/2025/05/%D7%A4%D7%AA%D7%A8%D7%95%D7%9F-%D7%9E%D7%9C%D7%90-35571-%D7%9E%D7%95%D7%A2%D7%93-%D7%90-%D7%A7%D7%99%D7%A5-25-1.pdf",
+  },
+  {
+    date: "מועד חדש לדוגמה 2025", // New example exam date
+    chapters: [
+      {
+        name: "פרק 1",
+        questions: [
+          { number: "שאלה 1 א", instruction: "חדש ללא א'", skipped: false },
+          { number: "שאלה 1 ב", instruction: "", skipped: false },
+          { number: "שאלה 1 ג", instruction: "", skipped: false },
+          { number: "שאלה 1 ד", instruction: "", skipped: false },
+          { number: "שאלה 2", instruction: "", skipped: false },
+        ],
+      },
+      {
+        name: "פרק 2",
+        questions: [
+          { number: "שאלה 3", instruction: "", skipped: false },
+          { number: "שאלה 4", instruction: "ללא ב'", skipped: false },
+          { number: "שאלה 5", instruction: "", skipped: true }, // Skipped example
+          { number: "שאלה 6", instruction: "", skipped: false },
+        ],
+      },
+      {
+        name: "פרק 3",
+        questions: [
+          { number: "שאלה 7", instruction: "", skipped: false },
+          { number: "שאלה 8", instruction: "", skipped: false },
+        ],
+      },
+    ],
+    examLink: "https://example.com/new_example_exam.pdf", // Example link for new exam
+    solutionsLink: "https://example.com/new_example_solutions.pdf", // Example link for new solutions
   },
 ];
 
@@ -674,18 +764,33 @@ const loadExamsData = () => {
               return {
                 ...newChapter,
                 questions: newChapter.questions.map((newQuestion) => {
-                  const oldQuestion = oldChapter?.questions.find(
-                    (oldQ) => oldQ.number === newQuestion.number
-                  ); // Find matching old question by number
-                  return {
-                    ...newQuestion,
-                    // Preserve 'done' status if a matching old question exists, otherwise default to false
-                    done: oldQuestion
-                      ? oldQuestion.done !== undefined
-                        ? oldQuestion.done
-                        : false
-                      : false,
-                  };
+                  // Special migration logic for "שאלה 1" split into sections
+                  if (newQuestion.number.startsWith("שאלה 1 ")) {
+                    const oldQuestion1 = oldChapter?.questions.find(
+                      (oldQ) => oldQ.number === "שאלה 1"
+                    );
+                    return {
+                      ...newQuestion,
+                      done: oldQuestion1
+                        ? oldQuestion1.done !== undefined
+                          ? oldQuestion1.done
+                          : false
+                        : false,
+                    };
+                  } else {
+                    const oldQuestion = oldChapter?.questions.find(
+                      (oldQ) => oldQ.number === newQuestion.number
+                    );
+                    return {
+                      ...newQuestion,
+                      // Preserve 'done' status if a matching old question exists, otherwise default to false
+                      done: oldQuestion
+                        ? oldQuestion.done !== undefined
+                          ? oldQuestion.done
+                          : false
+                        : false,
+                    };
+                  }
                 }),
               };
             }),
