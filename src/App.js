@@ -678,39 +678,6 @@ const initialExamsData = [
     solutionsLink:
       "https://files.geva.co.il/geva_website/uploads/2025/05/%D7%A4%D7%AA%D7%A8%D7%95%D7%9F-%D7%9E%D7%9C%D7%90-35571-%D7%9E%D7%95%D7%A2%D7%93-%D7%90-%D7%A7%D7%99%D7%A5-25-1.pdf",
   },
-  {
-    date: "מועד חדש לדוגמה 2025", // New example exam date
-    chapters: [
-      {
-        name: "פרק 1",
-        questions: [
-          { number: "שאלה 1 א", instruction: "חדש ללא א'", skipped: false },
-          { number: "שאלה 1 ב", instruction: "", skipped: false },
-          { number: "שאלה 1 ג", instruction: "", skipped: false },
-          { number: "שאלה 1 ד", instruction: "", skipped: false },
-          { number: "שאלה 2", instruction: "", skipped: false },
-        ],
-      },
-      {
-        name: "פרק 2",
-        questions: [
-          { number: "שאלה 3", instruction: "", skipped: false },
-          { number: "שאלה 4", instruction: "ללא ב'", skipped: false },
-          { number: "שאלה 5", instruction: "", skipped: true }, // Skipped example
-          { number: "שאלה 6", instruction: "", skipped: false },
-        ],
-      },
-      {
-        name: "פרק 3",
-        questions: [
-          { number: "שאלה 7", instruction: "", skipped: false },
-          { number: "שאלה 8", instruction: "", skipped: false },
-        ],
-      },
-    ],
-    examLink: "https://example.com/new_example_exam.pdf", // Example link for new exam
-    solutionsLink: "https://example.com/new_example_solutions.pdf", // Example link for new solutions
-  },
 ];
 
 // Function to load and initialize exams data, moved outside the component
